@@ -33,42 +33,87 @@ public class CodeController {
         CodeExecutionResponse response = new CodeExecutionResponse();
 
         try {
-
-            String code = request.getCode();
+            String code     = request.getCode();
             String language = request.getLanguage();
 
-            Process run;
-
-            // 🔥 HANDLE MULTIPLE LANGUAGES
+            // ─────────────────────────────────────────
+            //  JAVA
+            // ─────────────────────────────────────────
             if ("java".equalsIgnoreCase(language)) {
 
-                File file = new File("Main.java");
-                FileWriter writer = new FileWriter(file);
-                writer.write(code);
-                writer.close();
+                // 1. Write source
+                try (FileWriter w = new FileWriter("Main.java")) { w.write(code); }
 
-                Process compile = Runtime.getRuntime().exec("javac Main.java");
+                // 2. Compile — capture javac stderr
+                ProcessBuilder compilePb = new ProcessBuilder("javac", "Main.java");
+                compilePb.redirectErrorStream(true);          // merge stderr → stdout
+                Process compile = compilePb.start();
+
+                String compileOut = drain(compile.getInputStream());
                 compile.waitFor();
 
-                run = Runtime.getRuntime().exec("java Main");
+                if (compile.exitValue() != 0) {
+                    // Syntax / compile error — return immediately
+                    response.setStdout("");
+                    response.setStderr(compileOut);
+                    response.setExitCode(1);
+                    saveExecution(token, code, language, compileOut);
+                    return response;
+                }
 
+                // 3. Run — merge stdout + stderr so exceptions appear inline
+                ProcessBuilder runPb = new ProcessBuilder("java", "Main");
+                runPb.redirectErrorStream(true);              // ✅ KEY FIX
+                Process run = runPb.start();
+
+                String output = drain(run.getInputStream());  // contains BOTH stdout & stderr
+                run.waitFor();
+
+                response.setStdout(output);
+                response.setStderr("");                       // already merged into stdout
+                response.setExitCode(run.exitValue());
+                saveExecution(token, code, language, output);
+                return response;
+
+                // ─────────────────────────────────────────
+                //  PYTHON
+                // ─────────────────────────────────────────
             } else if ("python".equalsIgnoreCase(language)) {
 
-                File file = new File("script.py");
-                FileWriter writer = new FileWriter(file);
-                writer.write(code);
-                writer.close();
+                try (FileWriter w = new FileWriter("script.py")) { w.write(code); }
 
-                run = Runtime.getRuntime().exec("python script.py");
+                ProcessBuilder pb = new ProcessBuilder("python", "script.py");
+                pb.redirectErrorStream(true);
+                Process run = pb.start();
 
+                String output = drain(run.getInputStream());
+                run.waitFor();
+
+                response.setStdout(output);
+                response.setStderr("");
+                response.setExitCode(run.exitValue());
+                saveExecution(token, code, language, output);
+                return response;
+
+                // ─────────────────────────────────────────
+                //  JAVASCRIPT
+                // ─────────────────────────────────────────
             } else if ("javascript".equalsIgnoreCase(language)) {
 
-                File file = new File("script.js");
-                FileWriter writer = new FileWriter(file);
-                writer.write(code);
-                writer.close();
+                try (FileWriter w = new FileWriter("script.js")) { w.write(code); }
 
-                run = Runtime.getRuntime().exec("node script.js");
+                ProcessBuilder pb = new ProcessBuilder("node", "script.js");
+                pb.redirectErrorStream(true);
+                Process run = pb.start();
+
+                String output = drain(run.getInputStream());
+                run.waitFor();
+
+                response.setStdout(output);
+                response.setStderr("");
+                response.setExitCode(run.exitValue());
+                saveExecution(token, code, language, output);
+                return response;
 
             } else {
                 response.setStdout("");
@@ -76,60 +121,6 @@ public class CodeController {
                 response.setExitCode(1);
                 return response;
             }
-
-            // 🔥 READ OUTPUT
-            BufferedReader outputReader = new BufferedReader(
-                    new InputStreamReader(run.getInputStream())
-            );
-
-            BufferedReader errorReader = new BufferedReader(
-                    new InputStreamReader(run.getErrorStream())
-            );
-
-            StringBuilder output = new StringBuilder();
-            StringBuilder error = new StringBuilder();
-
-            String line;
-
-            while ((line = outputReader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-
-            while ((line = errorReader.readLine()) != null) {
-                error.append(line).append("\n");
-            }
-
-            run.waitFor();
-
-            // 🔥 GET USER FROM JWT
-            Long userId = JwtUtil.extractUserId(token.replace("Bearer ", ""));
-            User user = userRepository.findById(userId).orElse(null);
-
-            // 🔥 SAVE TO DB
-            CodeExecution execution = new CodeExecution();
-            execution.setCode(code);
-            execution.setLanguage(language);
-            execution.setOutput(output.toString() + error.toString());
-            execution.setExecutedAt(LocalDateTime.now());
-            execution.setUser(user);
-
-            repository.save(execution);
-
-            // 🔥 RESPONSE
-            String finalOutput = output.toString();
-            String finalError = error.toString();
-
-            response.setStdout(finalOutput);
-            response.setStderr(finalError);
-
-// ✅ FIX: detect runtime errors properly
-            if (finalError.contains("Exception") || finalError.contains("Error")) {
-                response.setExitCode(1);
-            } else {
-                response.setExitCode(0);
-            }
-
-            return response;
 
         } catch (Exception e) {
             response.setStdout("");
@@ -139,10 +130,43 @@ public class CodeController {
         }
     }
 
-    // 🔥 USER-SPECIFIC HISTORY
+    // ─────────────────────────────────────────
+    //  HELPER: drain an InputStream to String
+    // ─────────────────────────────────────────
+    private String drain(InputStream is) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    // ─────────────────────────────────────────
+    //  HELPER: save execution to DB
+    // ─────────────────────────────────────────
+    private void saveExecution(String token, String code, String language, String output) {
+        try {
+            Long userId = JwtUtil.extractUserId(token.replace("Bearer ", ""));
+            User user   = userRepository.findById(userId).orElse(null);
+
+            CodeExecution execution = new CodeExecution();
+            execution.setCode(code);
+            execution.setLanguage(language);
+            execution.setOutput(output);
+            execution.setExecutedAt(LocalDateTime.now());
+            execution.setUser(user);
+            repository.save(execution);
+        } catch (Exception ignored) {}
+    }
+
+    // ─────────────────────────────────────────
+    //  HISTORY
+    // ─────────────────────────────────────────
     @GetMapping("/history")
     public List<CodeExecution> getHistory(@RequestHeader("Authorization") String token) {
-
         Long userId = JwtUtil.extractUserId(token.replace("Bearer ", ""));
         return repository.findByUserId(userId);
     }
@@ -153,3 +177,5 @@ public class CodeController {
         return "Deleted successfully";
     }
 }
+
+
