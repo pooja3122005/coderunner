@@ -108,16 +108,26 @@ public class CodeController {
             // 🔥 SAVE TO DB
             CodeExecution execution = new CodeExecution();
             execution.setCode(code);
-            execution.setOutput(output.toString());
+            execution.setLanguage(language);
+            execution.setOutput(output.toString() + error.toString());
             execution.setExecutedAt(LocalDateTime.now());
             execution.setUser(user);
 
             repository.save(execution);
 
             // 🔥 RESPONSE
-            response.setStdout(output.toString());
-            response.setStderr(error.toString());
-            response.setExitCode(error.length() == 0 ? 0 : 1);
+            String finalOutput = output.toString();
+            String finalError = error.toString();
+
+            response.setStdout(finalOutput);
+            response.setStderr(finalError);
+
+// ✅ FIX: detect runtime errors properly
+            if (finalError.contains("Exception") || finalError.contains("Error")) {
+                response.setExitCode(1);
+            } else {
+                response.setExitCode(0);
+            }
 
             return response;
 

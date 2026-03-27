@@ -2,8 +2,7 @@ package com.example.coderunner.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import com.example.coderunner.entity.User;
-//import java.util.List;
+
 @Entity
 public class CodeExecution {
 
@@ -19,6 +18,8 @@ public class CodeExecution {
 
     private LocalDateTime executedAt;
 
+    // ✅ ADD THIS FIELD
+    private String language;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -61,4 +62,13 @@ public class CodeExecution {
         this.user = user;
     }
 
+    // ✅ FIXED LANGUAGE GETTER & SETTER
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

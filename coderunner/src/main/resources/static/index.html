@@ -737,14 +737,9 @@ localStorage.setItem('cr_user', currentUser);
     });
 
     // ── Code execution ────────────────────────────────────
- async function runCode() {
+async function runCode() {
   const code = document.getElementById('codeEditor').value;
   const lang = document.getElementById('langSelect').value;
-
-  if (!token) {
-    showToast("Login first", "err");
-    return;
-  }
 
   try {
     const r = await fetch('/api/code/execute', {
@@ -759,10 +754,11 @@ localStorage.setItem('cr_user', currentUser);
       })
     });
 
-    const output = await r.text();
+    const data = await r.json();
 
+    // ✅ SHOW ONLY OUTPUT
     document.getElementById('outputContent').innerHTML =
-      `<pre>${output}</pre>`;
+      `<pre>${data.stdout ||  data.stderr}</pre>`;
 
   } catch (e) {
     console.error(e);
@@ -795,16 +791,12 @@ localStorage.setItem('cr_user', currentUser);
       badge.className = 'output-badge ' + (ok ? 'success' : 'error');
       badge.textContent = ok ? 'OK' : 'ERROR';
 
-      if (d.stdout) {
-        const p = document.createElement('pre');
-        p.className = 'output-stdout'; p.textContent = d.stdout;
-        content.appendChild(p);
-      }
-      if (d.stderr) {
-        const p = document.createElement('pre');
-        p.className = 'output-stderr'; p.textContent = d.stderr;
-        content.appendChild(p);
-      }
+     const combined = (d.stdout || '') + (d.stderr || '');
+
+const p = document.createElement('pre');
+p.textContent = combined || '(no output)';
+content.appendChild(p);
+
       if (!d.stdout && !d.stderr) {
         const p = document.createElement('span');
         p.className = 'output-placeholder'; p.textContent = '(no output)';
