@@ -31,7 +31,6 @@
           overflow-x: hidden;
         }
 
-        /* ── Noise overlay ── */
         body::before {
           content: '';
           position: fixed; inset: 0;
@@ -39,9 +38,7 @@
           pointer-events: none; z-index: 0;
         }
 
-        /* ──────────────────────────────────────────
-           AUTH SCREENS
-        ────────────────────────────────────────── */
+        /* AUTH */
         .auth-screen {
           display: none;
           position: fixed; inset: 0;
@@ -69,10 +66,7 @@
           border-radius: 16px 16px 0 0;
         }
 
-        .auth-logo {
-          display: flex; align-items: center; gap: 10px;
-          margin-bottom: 32px;
-        }
+        .auth-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
         .auth-logo .logo-icon {
           width: 38px; height: 38px;
           background: linear-gradient(135deg, var(--accent2), var(--accent));
@@ -80,9 +74,7 @@
           display: flex; align-items: center; justify-content: center;
           font-size: 18px;
         }
-        .auth-logo span {
-          font-size: 22px; font-weight: 800; letter-spacing: -.5px;
-        }
+        .auth-logo span { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
 
         .auth-title { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
         .auth-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; font-family: 'JetBrains Mono', monospace; }
@@ -96,10 +88,7 @@
           font-family: 'JetBrains Mono', monospace; font-size: 14px;
           outline: none; transition: border-color .2s, box-shadow .2s;
         }
-        .field input:focus {
-          border-color: var(--accent);
-          box-shadow: 0 0 0 3px rgba(0,212,255,.1);
-        }
+        .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,212,255,.1); }
 
         .btn-primary {
           width: 100%; padding: 13px;
@@ -107,16 +96,12 @@
           border: none; border-radius: var(--radius);
           color: #fff; font-family: 'Syne', sans-serif;
           font-size: 15px; font-weight: 700; cursor: pointer;
-          transition: opacity .2s, transform .15s;
-          letter-spacing: .03em;
+          transition: opacity .2s, transform .15s; letter-spacing: .03em;
         }
         .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
         .btn-primary:active { transform: translateY(0); }
 
-        .auth-switch {
-          text-align: center; margin-top: 20px;
-          color: var(--muted); font-size: 14px;
-        }
+        .auth-switch { text-align: center; margin-top: 20px; color: var(--muted); font-size: 14px; }
         .auth-switch a { color: var(--accent); cursor: pointer; text-decoration: none; }
         .auth-switch a:hover { text-decoration: underline; }
 
@@ -124,35 +109,26 @@
           background: rgba(255,77,109,.1); border: 1px solid rgba(255,77,109,.3);
           color: var(--red); font-size: 13px; padding: 10px 14px;
           border-radius: var(--radius); margin-bottom: 16px;
-          font-family: 'JetBrains Mono', monospace;
-          display: none;
+          font-family: 'JetBrains Mono', monospace; display: none;
         }
         .error-msg.show { display: block; }
 
-        /* ──────────────────────────────────────────
-           MAIN APP
-        ────────────────────────────────────────── */
+        /* APP */
         #app { display: none; flex-direction: column; height: 100vh; }
         #app.active { display: flex; }
 
-        /* Topbar */
         .topbar {
           height: 56px; padding: 0 20px;
           display: flex; align-items: center; justify-content: space-between;
           background: var(--bg2); border-bottom: 1px solid var(--border);
-          position: relative; z-index: 10;
-          flex-shrink: 0;
+          position: relative; z-index: 10; flex-shrink: 0;
         }
         .topbar-left { display: flex; align-items: center; gap: 12px; }
-        .topbar-logo {
-          display: flex; align-items: center; gap: 8px;
-        }
+        .topbar-logo { display: flex; align-items: center; gap: 8px; }
         .topbar-logo .tl-icon {
           width: 28px; height: 28px;
           background: linear-gradient(135deg, var(--accent2), var(--accent));
-          border-radius: 7px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 13px;
+          border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px;
         }
         .topbar-logo span { font-size: 17px; font-weight: 800; letter-spacing: -.4px; }
 
@@ -160,8 +136,7 @@
           background: var(--bg3); border: 1px solid var(--border);
           color: var(--text); padding: 6px 12px 6px 10px;
           border-radius: 8px; font-family: 'JetBrains Mono', monospace;
-          font-size: 13px; cursor: pointer; outline: none;
-          transition: border-color .2s;
+          font-size: 13px; cursor: pointer; outline: none; transition: border-color .2s;
         }
         .lang-select:hover { border-color: var(--accent); }
 
@@ -177,8 +152,7 @@
         .user-avatar {
           width: 24px; height: 24px;
           background: linear-gradient(135deg, var(--accent2), var(--accent));
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
+          border-radius: 50%; display: flex; align-items: center; justify-content: center;
           font-size: 11px; font-weight: 700;
         }
         .user-name { font-size: 13px; font-weight: 600; }
@@ -187,22 +161,15 @@
           background: transparent; border: 1px solid var(--border);
           color: var(--muted); padding: 6px 12px;
           border-radius: 8px; font-size: 13px; cursor: pointer;
-          font-family: 'Syne', sans-serif; font-weight: 600;
-          transition: all .2s;
+          font-family: 'Syne', sans-serif; font-weight: 600; transition: all .2s;
         }
         .btn-logout:hover { border-color: var(--red); color: var(--red); }
 
-        /* Main area */
-        .workspace {
-          flex: 1; display: flex; overflow: hidden;
-        }
+        .workspace { flex: 1; display: flex; overflow: hidden; }
 
-        /* Sidebar */
         .sidebar {
-          width: 220px; background: var(--bg2);
-          border-right: 1px solid var(--border);
-          display: flex; flex-direction: column;
-          flex-shrink: 0;
+          width: 220px; background: var(--bg2); border-right: 1px solid var(--border);
+          display: flex; flex-direction: column; flex-shrink: 0;
         }
         .sidebar-header {
           padding: 14px 16px; border-bottom: 1px solid var(--border);
@@ -214,66 +181,40 @@
         .sidebar-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
         .hist-item {
-          padding: 10px 12px; border-radius: 8px;
-          cursor: pointer; transition: background .15s;
-          margin-bottom: 2px; border: 1px solid transparent;
+          padding: 10px 12px; border-radius: 8px; cursor: pointer;
+          transition: background .15s; margin-bottom: 2px; border: 1px solid transparent;
         }
         .hist-item:hover { background: var(--bg3); }
         .hist-item.active { background: var(--bg3); border-color: var(--border); }
-        .hist-item-lang {
-          font-family: 'JetBrains Mono', monospace; font-size: 11px;
-          color: var(--accent); font-weight: 600; margin-bottom: 3px;
-        }
-        .hist-item-snippet {
-          font-size: 12px; color: var(--muted); white-space: nowrap;
-          overflow: hidden; text-overflow: ellipsis;
-          font-family: 'JetBrains Mono', monospace;
-        }
+        .hist-item-lang { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 3px; }
+        .hist-item-snippet { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'JetBrains Mono', monospace; }
         .hist-item-time { font-size: 10px; color: var(--border); margin-top: 3px; }
+        .sidebar-empty { padding: 24px 16px; text-align: center; color: var(--muted); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
 
-        .sidebar-empty {
-          padding: 24px 16px; text-align: center;
-          color: var(--muted); font-size: 12px;
-          font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Editor area */
-        .editor-area {
-          flex: 1; display: flex; flex-direction: column;
-          overflow: hidden;
-        }
+        .editor-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
         .editor-tabs {
-          display: flex; align-items: center;
-          padding: 0 16px; gap: 4px;
-          border-bottom: 1px solid var(--border);
-          background: var(--bg2); height: 40px;
+          display: flex; align-items: center; padding: 0 16px; gap: 4px;
+          border-bottom: 1px solid var(--border); background: var(--bg2); height: 40px;
         }
         .tab {
-          padding: 6px 14px; border-radius: 6px;
-          font-size: 13px; font-weight: 600; cursor: pointer;
-          font-family: 'JetBrains Mono', monospace;
-          color: var(--muted); transition: all .15s;
-          border: 1px solid transparent;
+          padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 600;
+          cursor: pointer; font-family: 'JetBrains Mono', monospace;
+          color: var(--muted); transition: all .15s; border: 1px solid transparent;
         }
         .tab.active { background: var(--bg3); border-color: var(--border); color: var(--text); }
         .tab:hover:not(.active) { color: var(--text); }
 
-        .editor-pane {
-          flex: 1; display: flex; flex-direction: column; overflow: hidden;
-        }
+        .editor-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 
-        .code-editor-wrap {
-          flex: 1; position: relative; overflow: hidden;
-        }
+        .code-editor-wrap { flex: 1; position: relative; overflow: hidden; }
 
         .line-numbers {
-          position: absolute; left: 0; top: 0; bottom: 0;
-          width: 48px; background: var(--bg2); border-right: 1px solid var(--border);
+          position: absolute; left: 0; top: 0; bottom: 0; width: 48px;
+          background: var(--bg2); border-right: 1px solid var(--border);
           padding: 16px 8px; color: var(--muted);
           font-family: 'JetBrains Mono', monospace; font-size: 13px;
-          line-height: 1.7; text-align: right; user-select: none;
-          overflow: hidden; z-index: 1;
+          line-height: 1.7; text-align: right; user-select: none; overflow: hidden; z-index: 1;
         }
 
         #codeEditor {
@@ -281,52 +222,40 @@
           background: transparent; border: none; outline: none; resize: none;
           color: var(--text); font-family: 'JetBrains Mono', monospace;
           font-size: 13px; line-height: 1.7; padding: 16px 20px;
-          caret-color: var(--accent); tab-size: 2;
-          white-space: pre; overflow: auto;
+          caret-color: var(--accent); tab-size: 2; white-space: pre; overflow: auto;
         }
         #codeEditor::selection { background: rgba(0,212,255,.15); }
         #codeEditor::-webkit-scrollbar { width: 6px; height: 6px; }
         #codeEditor::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-        /* Status bar */
         .status-bar {
           height: 28px; padding: 0 16px;
           display: flex; align-items: center; justify-content: space-between;
           background: var(--bg2); border-top: 1px solid var(--border);
-          font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
-          flex-shrink: 0;
+          font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); flex-shrink: 0;
         }
         .status-left, .status-right { display: flex; align-items: center; gap: 16px; }
-        .status-dot {
-          width: 6px; height: 6px; border-radius: 50%; background: var(--green);
-          animation: pulse 2s infinite;
-        }
+        .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
 
-        /* Action bar */
         .action-bar {
-          padding: 12px 16px;
-          display: flex; align-items: center; gap: 10px;
-          border-top: 1px solid var(--border); background: var(--bg2);
-          flex-shrink: 0;
+          padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+          border-top: 1px solid var(--border); background: var(--bg2); flex-shrink: 0;
         }
 
         .btn-run {
-          display: flex; align-items: center; gap: 8px;
-          padding: 10px 20px;
+          display: flex; align-items: center; gap: 8px; padding: 10px 20px;
           background: linear-gradient(135deg, var(--green), #059669);
           border: none; border-radius: var(--radius);
           color: #000; font-family: 'Syne', sans-serif;
           font-size: 14px; font-weight: 700; cursor: pointer;
-          transition: opacity .2s, transform .15s;
-          letter-spacing: .02em;
+          transition: opacity .2s, transform .15s; letter-spacing: .02em;
         }
         .btn-run:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
         .btn-run:active { transform: translateY(0); }
         .btn-run:disabled { opacity: .5; cursor: not-allowed; }
 
         .btn-clear {
-          padding: 10px 16px;
-          background: transparent; border: 1px solid var(--border);
+          padding: 10px 16px; background: transparent; border: 1px solid var(--border);
           color: var(--muted); border-radius: var(--radius);
           font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
           cursor: pointer; transition: all .2s;
@@ -339,13 +268,10 @@
         }
         .stdin-toggle input[type=checkbox] { accent-color: var(--accent); }
 
-        /* Output area */
         .output-area {
           width: 380px; display: flex; flex-direction: column;
-          border-left: 1px solid var(--border);
-          flex-shrink: 0;
+          border-left: 1px solid var(--border); flex-shrink: 0;
         }
-
         .output-header {
           padding: 0 16px; height: 40px;
           display: flex; align-items: center; justify-content: space-between;
@@ -353,10 +279,7 @@
           font-size: 12px; font-weight: 700; letter-spacing: .08em;
           text-transform: uppercase; color: var(--muted);
         }
-        .output-badge {
-          font-size: 10px; padding: 2px 8px;
-          border-radius: 10px; font-weight: 700;
-        }
+        .output-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
         .output-badge.success { background: rgba(34,211,160,.15); color: var(--green); }
         .output-badge.error   { background: rgba(255,77,109,.15);  color: var(--red); }
         .output-badge.idle    { background: var(--border); color: var(--muted); }
@@ -368,7 +291,6 @@
         }
         .output-content::-webkit-scrollbar { width: 4px; }
         .output-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
         .output-stdout { color: var(--text); white-space: pre-wrap; word-break: break-word; }
         .output-stderr { color: var(--red); white-space: pre-wrap; word-break: break-word; }
         .output-placeholder { color: var(--muted); font-style: italic; }
@@ -376,12 +298,11 @@
         .output-meta {
           padding: 10px 16px; border-top: 1px solid var(--border);
           display: flex; gap: 16px; font-size: 11px;
-          font-family: 'JetBrains Mono', monospace;
-          background: var(--bg2); color: var(--muted);
+          font-family: 'JetBrains Mono', monospace; background: var(--bg2); color: var(--muted);
         }
         .meta-item span { color: var(--text); font-weight: 600; }
 
-        /* Stdin panel */
+        /* stdin panel */
         .stdin-panel {
           display: none; padding: 10px 16px 0;
           background: var(--bg2); border-top: 1px solid var(--border);
@@ -400,57 +321,34 @@
         }
         .stdin-panel textarea:focus { border-color: var(--accent); }
 
-        /* Spinner */
         @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner {
-          width: 14px; height: 14px; border: 2px solid rgba(0,0,0,.3);
-          border-top-color: #000; border-radius: 50%;
-          animation: spin .7s linear infinite;
-        }
+        .spinner { width: 14px; height: 14px; border: 2px solid rgba(0,0,0,.3); border-top-color: #000; border-radius: 50%; animation: spin .7s linear infinite; }
 
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse {
-          0%,100% { opacity: 1; }
-          50%      { opacity: .4; }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; } to { opacity: 1; }
-        }
+        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-        /* Toast */
         .toast {
           position: fixed; bottom: 24px; right: 24px;
           background: var(--bg3); border: 1px solid var(--border);
           border-radius: var(--radius); padding: 12px 18px;
           font-size: 13px; font-family: 'JetBrains Mono', monospace;
-          z-index: 999; animation: slideUp .3s ease;
-          display: none;
+          z-index: 999; animation: slideUp .3s ease; display: none;
         }
         .toast.show { display: block; }
         .toast.ok  { border-color: var(--green); color: var(--green); }
         .toast.err { border-color: var(--red);   color: var(--red); }
 
-        /* Loading overlay for execution */
         .exec-overlay {
-          position: absolute; inset: 0;
-          background: rgba(10,12,16,.7);
+          position: absolute; inset: 0; background: rgba(10,12,16,.7);
           display: none; align-items: center; justify-content: center;
           flex-direction: column; gap: 12px;
           backdrop-filter: blur(2px); z-index: 5;
-          font-size: 13px; color: var(--muted);
-          font-family: 'JetBrains Mono', monospace;
+          font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace;
         }
         .exec-overlay.show { display: flex; }
-        .exec-spinner {
-          width: 28px; height: 28px; border: 2px solid var(--border);
-          border-top-color: var(--accent); border-radius: 50%;
-          animation: spin .8s linear infinite;
-        }
+        .exec-spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
 
-        /* Welcome screen inside editor */
         .welcome-tip {
           position: absolute; bottom: 16px; right: 16px;
           background: var(--bg3); border: 1px solid var(--border);
@@ -458,15 +356,12 @@
           font-family: 'JetBrains Mono', monospace; font-size: 11px;
           color: var(--muted); pointer-events: none;
         }
-        .welcome-tip kbd {
-          background: var(--bg2); border: 1px solid var(--border);
-          padding: 1px 6px; border-radius: 4px; color: var(--text);
-        }
+        .welcome-tip kbd { background: var(--bg2); border: 1px solid var(--border); padding: 1px 6px; border-radius: 4px; color: var(--text); }
     </style>
 </head>
 <body>
 
-<!-- ── Login ── -->
+<!-- Login -->
 <div class="auth-screen active" id="loginScreen">
     <div class="auth-card">
         <div class="auth-logo">
@@ -475,7 +370,7 @@
         </div>
         <div class="auth-title">Welcome back</div>
         <div class="auth-sub">$ ssh coderunner.io --user you</div>
-        <div class="error-msg" id="loginError">Invalid credentials. Try again.</div>
+        <div class="error-msg" id="loginError"></div>
         <div class="field">
             <label>Username</label>
             <input type="text" id="loginUser" placeholder="your_username" autocomplete="username" />
@@ -489,7 +384,7 @@
     </div>
 </div>
 
-<!-- ── Register ── -->
+<!-- Register -->
 <div class="auth-screen" id="registerScreen">
     <div class="auth-card">
         <div class="auth-logo">
@@ -498,7 +393,7 @@
         </div>
         <div class="auth-title">Create account</div>
         <div class="auth-sub">$ curl -X POST /api/users/register</div>
-        <div class="error-msg" id="registerError">Registration failed.</div>
+        <div class="error-msg" id="registerError"></div>
         <div class="field">
             <label>Username</label>
             <input type="text" id="regUser" placeholder="your_username" />
@@ -516,7 +411,7 @@
     </div>
 </div>
 
-<!-- ── App ── -->
+<!-- App -->
 <div id="app">
     <div class="topbar">
         <div class="topbar-left">
@@ -525,10 +420,9 @@
                 <span>CodeRunner</span>
             </div>
             <select class="lang-select" id="langSelect" onchange="onLangChange()">
-                <option value="python"> Python</option>
+                <option value="python">Python</option>
                 <option value="javascript">JavaScript</option>
-                <option value="java"> Java</option>
-
+                <option value="java">Java</option>
             </select>
         </div>
         <div class="topbar-right">
@@ -541,7 +435,6 @@
     </div>
 
     <div class="workspace">
-        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">History</div>
             <div class="sidebar-list" id="historyList">
@@ -549,7 +442,6 @@
             </div>
         </div>
 
-        <!-- Editor -->
         <div class="editor-area">
             <div class="editor-tabs">
                 <div class="tab active" id="editorTab" onclick="switchTab('editor')">editor</div>
@@ -589,7 +481,6 @@
                 </div>
             </div>
 
-            <!-- History pane -->
             <div style="display:none; flex:1; overflow-y:auto; padding:20px;" id="historyPane">
                 <div id="historyTable"></div>
             </div>
@@ -607,7 +498,6 @@
             </div>
         </div>
 
-        <!-- Output -->
         <div class="output-area">
             <div class="output-header">
                 Output
@@ -628,22 +518,24 @@
 <div class="toast" id="toast"></div>
 
 <script>
-    // ── State ────────────────────────────────────────────
-    const API = '';   // same origin
-    let token = localStorage.getItem('cr_token') || '';
-    let currentUser = localStorage.getItem('cr_user') || '';
-    let history = [];
-    let currentTab = 'editor';
+    // ─────────────────────────────────────────
+    // ✅ FIX 1: point to your Spring Boot backend port
+    // Change 8080 to whatever port your backend runs on
+    const API = 'http://localhost:8081';
+    // ─────────────────────────────────────────
+
+    let token       = localStorage.getItem('cr_token') || '';
+    let currentUser = localStorage.getItem('cr_user')  || '';
+    let historyData = [];
+    let currentTab  = 'editor';
 
     const starters = {
       python:     'print("Hello, CodeRunner!")\n\nx = 42\nprint(f"The answer is {x}")',
       javascript: 'console.log("Hello, CodeRunner!");\n\nconst x = 42;\nconsole.log(`The answer is ${x}`);',
       java:       'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, CodeRunner!");\n    }\n}',
-      cpp:        '#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, CodeRunner!" << endl;\n    return 0;\n}',
-      c:          '#include <stdio.h>\n\nint main() {\n    printf("Hello, CodeRunner!\\n");\n    return 0;\n}',
     };
 
-    // ── Init ─────────────────────────────────────────────
+    // Init
     if (token && currentUser) showApp();
     else showLogin();
 
@@ -666,52 +558,50 @@
       loadHistory();
     }
 
-    // ── Auth ─────────────────────────────────────────────
+    // ─────────────────────────────────────────
+    // AUTH
+    // ─────────────────────────────────────────
     async function doLogin() {
-  const u = document.getElementById('loginUser').value.trim();
-const p = document.getElementById('loginPass').value;
-  try {
-    const r = await fetch('/api/users/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    username: u,
-    password: p
-  })
-});
+      const u = document.getElementById('loginUser').value.trim();
+      const p = document.getElementById('loginPass').value;
+      if (!u || !p) { showError('loginError', 'Fill in both fields'); return; }
 
-  const text = await r.text();
-
-if (!r.ok) {
-  throw new Error(text);
-}
-
-const d = JSON.parse(text);
-
-    token = d.token;   // 🔥 VERY IMPORTANT
-currentUser = u;
-
-localStorage.setItem('cr_token', token);
-localStorage.setItem('cr_user', currentUser);
-
-    showApp();
-
-  } catch (e) {
-    showError('loginError', e.message);
-  }
-}
-    async function doRegister() {
-      const u = document.getElementById('regUser').value.trim();
-      const e2 = document.getElementById('regEmail').value.trim();
-      const p = document.getElementById('regPass').value;
-      if (!u || !e2 || !p) { showError('registerError', 'Fill all fields'); return; }
-      if (p.length < 6) { showError('registerError', 'Password min 6 chars'); return; }
       try {
-        const r = await fetch(`/api/users/register`, {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({username:u, email:e2, password:p})
+        // ✅ FIX 2: use full URL with API base so it hits :8080, not :8081
+        const r = await fetch(`${API}/api/users/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        });
+
+        const text = await r.text();
+        if (!r.ok) throw new Error(text || 'Login failed');
+
+        const d = JSON.parse(text);
+        token       = d.token;
+        currentUser = u;
+        localStorage.setItem('cr_token', token);
+        localStorage.setItem('cr_user',  currentUser);
+        hideError('loginError');
+        showApp();
+
+      } catch (e) {
+        showError('loginError', e.message || 'Login failed. Check username/password.');
+      }
+    }
+
+    async function doRegister() {
+      const u  = document.getElementById('regUser').value.trim();
+      const e2 = document.getElementById('regEmail').value.trim();
+      const p  = document.getElementById('regPass').value;
+      if (!u || !e2 || !p) { showError('registerError', 'Fill all fields'); return; }
+      if (p.length < 6)    { showError('registerError', 'Password min 6 chars'); return; }
+
+      try {
+        const r = await fetch(`${API}/api/users/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, email: e2, password: p })
         });
         if (!r.ok) throw new Error(await r.text());
         hideError('registerError');
@@ -729,78 +619,97 @@ localStorage.setItem('cr_user', currentUser);
       showLogin();
     }
 
-    // ── Keyboard shortcut ─────────────────────────────────
+    // Keyboard shortcut
     document.addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault(); runCode();
-      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runCode(); }
     });
 
-    // ── Code execution ────────────────────────────────────
-async function runCode() {
-  const code = document.getElementById('codeEditor').value;
-  const lang = document.getElementById('langSelect').value;
+    // ─────────────────────────────────────────
+    // ✅ FIX 3: runCode sends stdin + shows both stdout and stderr
+    // ─────────────────────────────────────────
+    async function runCode() {
+      const code = document.getElementById('codeEditor').value.trim();
+      if (!code) { showToast('Editor is empty', 'err'); return; }
 
-  try {
-    const r = await fetch('/api/code/execute', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({
-        language: lang,
-        code: code
-      })
-    });
+      const lang  = document.getElementById('langSelect').value;
+      const stdin = document.getElementById('stdinToggle').checked
+                      ? document.getElementById('stdinInput').value
+                      : '';
 
-    const data = await r.json();
+      setRunning(true);
+      const t0 = Date.now();
 
-    // ✅ SHOW ONLY OUTPUT
-    document.getElementById('outputContent').innerHTML =
-      `<pre>${data.stdout ||  data.stderr}</pre>`;
+      try {
+        const r = await fetch(`${API}/api/code/execute`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ language: lang, code: code, stdin: stdin })
+          // ✅ stdin is now included in every request
+        });
 
-  } catch (e) {
-    console.error(e);
-  }
-}
+        if (r.status === 401) {
+          showToast('Session expired — please log in again', 'err');
+          doLogout(); return;
+        }
 
-    function setRunning(v) {
-      const btn = document.getElementById('runBtn');
-      const overlay = document.getElementById('execOverlay');
-      btn.disabled = v;
-      overlay.classList.toggle('show', v);
-      if (v) {
-        document.getElementById('runBtnIcon').textContent = '';
-        document.getElementById('runBtnText').textContent = 'Running...';
-        document.getElementById('statusMsg').textContent = 'Executing...';
-      } else {
-        document.getElementById('runBtnIcon').textContent = '▶';
-        document.getElementById('runBtnText').textContent = 'Run';
-        document.getElementById('statusMsg').textContent = 'Ready';
+        const data    = await r.json();
+        const elapsed = ((Date.now() - t0) / 1000).toFixed(2) + 's';
+
+        showOutput(data, elapsed, lang);
+        loadHistory();
+
+      } catch (e) {
+        showOutput({ stdout: '', stderr: e.message, exitCode: 1 }, '—', lang);
+      } finally {
+        setRunning(false);
       }
     }
 
+    function setRunning(v) {
+      const btn     = document.getElementById('runBtn');
+      const overlay = document.getElementById('execOverlay');
+      btn.disabled  = v;
+      overlay.classList.toggle('show', v);
+      document.getElementById('runBtnIcon').textContent = v ? '' : '▶';
+      document.getElementById('runBtnText').textContent = v ? 'Running...' : 'Run';
+      document.getElementById('statusMsg').textContent  = v ? 'Executing...' : 'Ready';
+    }
+
+    // ─────────────────────────────────────────
+    // ✅ FIX 4: showOutput renders stdout in white, stderr in red — separately
+    // ─────────────────────────────────────────
     function showOutput(d, elapsed, lang) {
       const content = document.getElementById('outputContent');
-      const badge = document.getElementById('outputBadge');
-      const meta = document.getElementById('outputMeta');
+      const badge   = document.getElementById('outputBadge');
+      const meta    = document.getElementById('outputMeta');
 
       content.innerHTML = '';
       const ok = d.exitCode === 0;
-      badge.className = 'output-badge ' + (ok ? 'success' : 'error');
+      badge.className   = 'output-badge ' + (ok ? 'success' : 'error');
       badge.textContent = ok ? 'OK' : 'ERROR';
 
-     const combined = (d.stdout || '') + (d.stderr || '');
+      if (d.stdout) {
+        const pre = document.createElement('pre');
+        pre.className   = 'output-stdout';
+        pre.textContent = d.stdout;
+        content.appendChild(pre);
+      }
 
-const p = document.createElement('pre');
-p.textContent = combined || '(no output)';
-content.appendChild(p);
+      if (d.stderr) {
+        const pre = document.createElement('pre');
+        pre.className   = 'output-stderr';
+        pre.textContent = d.stderr;
+        content.appendChild(pre);
+      }
 
       if (!d.stdout && !d.stderr) {
-        const p = document.createElement('span');
-        p.className = 'output-placeholder'; p.textContent = '(no output)';
-        content.appendChild(p);
+        const s = document.createElement('span');
+        s.className   = 'output-placeholder';
+        s.textContent = '(no output)';
+        content.appendChild(s);
       }
 
       document.getElementById('metaExit').textContent = d.exitCode ?? '—';
@@ -810,20 +719,19 @@ content.appendChild(p);
       document.getElementById('statusMsg').textContent = ok ? '✓ Execution successful' : '✗ Execution failed';
     }
 
-    // ── History ───────────────────────────────────────────
+    // ─────────────────────────────────────────
+    // HISTORY
+    // ─────────────────────────────────────────
     async function loadHistory() {
       try {
         const r = await fetch(`${API}/api/code/history`, {
-          headers:{'Authorization': `Bearer ${token}`}
+          headers: { 'Authorization': `Bearer ${token}` }
         });
+        if (!r.ok) throw new Error('failed');
         const d = await r.json();
-        history = Array.isArray(d) ? d : [];
+        historyData = Array.isArray(d) ? d : [];
       } catch(e) {
-        // demo history
-        history = [
-          {id:1, language:'python', code:'print("Hello")', createdAt: new Date().toISOString(), exitCode:0},
-          {id:2, language:'javascript', code:'console.log("World")', createdAt: new Date(Date.now()-60000).toISOString(), exitCode:0},
-        ];
+        historyData = [];
       }
       renderHistorySidebar();
       if (currentTab === 'history') renderHistoryTable();
@@ -831,21 +739,21 @@ content.appendChild(p);
 
     function renderHistorySidebar() {
       const el = document.getElementById('historyList');
-      if (!history.length) {
+      if (!historyData.length) {
         el.innerHTML = '<div class="sidebar-empty">No executions yet</div>';
         return;
       }
-      el.innerHTML = history.slice(0,20).map((h,i) => `
+      el.innerHTML = historyData.slice(0,20).map((h,i) => `
         <div class="hist-item" onclick="loadFromHistory(${i})">
           <div class="hist-item-lang">${h.language}</div>
-          <div class="hist-item-snippet">${escapeHtml(h.code.slice(0,40))}</div>
-          <div class="hist-item-time">${formatTime(h.createdAt)}</div>
+          <div class="hist-item-snippet">${escapeHtml((h.code||'').slice(0,40))}</div>
+          <div class="hist-item-time">${formatTime(h.executedAt || h.createdAt)}</div>
         </div>`).join('');
     }
 
     function renderHistoryTable() {
       const el = document.getElementById('historyTable');
-      if (!history.length) {
+      if (!historyData.length) {
         el.innerHTML = '<p style="color:var(--muted);font-family:\'JetBrains Mono\',monospace;font-size:13px">No history yet.</p>';
         return;
       }
@@ -856,83 +764,69 @@ content.appendChild(p);
               <th style="text-align:left;padding:8px 12px">#</th>
               <th style="text-align:left;padding:8px 12px">Lang</th>
               <th style="text-align:left;padding:8px 12px">Snippet</th>
-              <th style="text-align:left;padding:8px 12px">Status</th>
               <th style="text-align:left;padding:8px 12px">Time</th>
             </tr>
           </thead>
           <tbody>
-            ${history.map((h,i) => `
+            ${historyData.map((h,i) => `
               <tr style="border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s"
                   onmouseenter="this.style.background='var(--bg3)'"
                   onmouseleave="this.style.background=''"
                   onclick="loadFromHistory(${i}); switchTab('editor')">
                 <td style="padding:10px 12px;color:var(--muted)">${h.id || i+1}</td>
                 <td style="padding:10px 12px;color:var(--accent)">${h.language}</td>
-                <td style="padding:10px 12px;color:var(--text);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(h.code.slice(0,60))}</td>
-                <td style="padding:10px 12px">
-                  <span style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:${(h.exitCode??0)===0?'rgba(34,211,160,.15)':'rgba(255,77,109,.15)'};color:${(h.exitCode??0)===0?'var(--green)':'var(--red)'}">
-                    ${(h.exitCode??0)===0?'OK':'ERR'}
-                  </span>
-                </td>
-                <td style="padding:10px 12px;color:var(--muted)">${formatTime(h.createdAt)}</td>
+                <td style="padding:10px 12px;color:var(--text);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml((h.code||'').slice(0,60))}</td>
+                <td style="padding:10px 12px;color:var(--muted)">${formatTime(h.executedAt || h.createdAt)}</td>
               </tr>`).join('')}
           </tbody>
         </table>`;
     }
 
     function loadFromHistory(i) {
-      const h = history[i];
+      const h = historyData[i];
       if (!h) return;
       document.getElementById('langSelect').value = h.language;
       onLangChange(false);
-      setCode(h.code);
+      setCode(h.code || '');
       switchTab('editor');
     }
 
-    // ── Editor helpers ────────────────────────────────────
+    // ─────────────────────────────────────────
+    // EDITOR HELPERS
+    // ─────────────────────────────────────────
     function setCode(c) {
       document.getElementById('codeEditor').value = c;
       updateLineNums();
     }
-
-    function onEditorInput() {
-      updateLineNums();
-      updateCursorPos();
-    }
-
+    function onEditorInput() { updateLineNums(); updateCursorPos(); }
     function onEditorKey(e) {
       if (e.key === 'Tab') {
         e.preventDefault();
-        const ta = e.target;
-        const s = ta.selectionStart, end = ta.selectionEnd;
+        const ta = e.target, s = ta.selectionStart, end = ta.selectionEnd;
         ta.value = ta.value.slice(0,s) + '  ' + ta.value.slice(end);
         ta.selectionStart = ta.selectionEnd = s+2;
         updateLineNums();
       }
     }
-
     function syncScroll() {
       document.getElementById('lineNums').scrollTop = document.getElementById('codeEditor').scrollTop;
     }
-
     function updateLineNums() {
       const lines = document.getElementById('codeEditor').value.split('\n').length;
       document.getElementById('lineNums').textContent = Array.from({length:lines},(_,i)=>i+1).join('\n');
     }
-
     function updateCursorPos() {
       const ta = document.getElementById('codeEditor');
       const txt = ta.value.slice(0, ta.selectionStart);
       const lines = txt.split('\n');
       document.getElementById('cursorPos').textContent = `Ln ${lines.length}, Col ${lines[lines.length-1].length+1}`;
     }
-
     document.getElementById('codeEditor').addEventListener('click', updateCursorPos);
     document.getElementById('codeEditor').addEventListener('keyup', updateCursorPos);
 
     function onLangChange(reset=true) {
       const lang = document.getElementById('langSelect').value;
-      const labels = {python:'Python',javascript:'JavaScript',java:'Java',cpp:'C++',c:'C'};
+      const labels = {python:'Python',javascript:'JavaScript',java:'Java'};
       document.getElementById('langLabel').textContent = labels[lang]||lang;
       if (reset) setCode(starters[lang]||'');
     }
@@ -951,24 +845,23 @@ content.appendChild(p);
       document.getElementById('stdinPanel').classList.toggle('show', show);
     }
 
-    // ── Tabs ──────────────────────────────────────────────
     function switchTab(t) {
       currentTab = t;
       document.getElementById('editorTab').classList.toggle('active', t==='editor');
-      document.getElementById('histTab').classList.toggle('active', t==='history');
-      document.getElementById('editorPane').style.display = t==='editor' ? 'flex' : 'none';
-      document.getElementById('historyPane').style.display = t==='history' ? 'block' : 'none';
+      document.getElementById('histTab').classList.toggle('active',   t==='history');
+      document.getElementById('editorPane').style.display   = t==='editor'  ? 'flex'  : 'none';
+      document.getElementById('historyPane').style.display  = t==='history' ? 'block' : 'none';
       if (t==='history') renderHistoryTable();
     }
 
-    // ── Utilities ──────────────────────────────────────────
+    // ─────────────────────────────────────────
+    // UTILITIES
+    // ─────────────────────────────────────────
     function showError(id, msg) {
       const el = document.getElementById(id);
       el.textContent = msg; el.classList.add('show');
     }
-    function hideError(id) {
-      document.getElementById(id).classList.remove('show');
-    }
+    function hideError(id) { document.getElementById(id).classList.remove('show'); }
 
     let toastTimer;
     function showToast(msg, type='ok') {
@@ -979,25 +872,21 @@ content.appendChild(p);
     }
 
     function escapeHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
-
     function formatTime(iso) {
       if (!iso) return '';
-      const d = new Date(iso);
-      const now = new Date();
-      const diff = (now-d)/1000;
-      if (diff < 60) return `${Math.floor(diff)}s ago`;
+      const d    = new Date(iso);
+      const diff = (Date.now() - d) / 1000;
+      if (diff < 60)   return `${Math.floor(diff)}s ago`;
       if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
       return d.toLocaleTimeString();
     }
 
-    // Enter key on login/register fields
     document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
     document.getElementById('loginUser').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-    document.getElementById('regPass').addEventListener('keydown', e => { if(e.key==='Enter') doRegister(); });
+    document.getElementById('regPass').addEventListener('keydown',   e => { if(e.key==='Enter') doRegister(); });
 
-    // Init line numbers
     updateLineNums();
 </script>
 </body>

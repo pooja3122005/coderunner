@@ -33,27 +33,25 @@ public class CodeController {
         CodeExecutionResponse response = new CodeExecutionResponse();
 
         try {
-            String code     = request.getCode();
+            String code = request.getCode();
             String language = request.getLanguage();
+            String input = request.getStdin(); // ✅ NEW
 
-            // ─────────────────────────────────────────
-            //  JAVA
-            // ─────────────────────────────────────────
+            // ===================== JAVA =====================
             if ("java".equalsIgnoreCase(language)) {
 
-                // 1. Write source
-                try (FileWriter w = new FileWriter("Main.java")) { w.write(code); }
+                try (FileWriter w = new FileWriter("Main.java")) {
+                    w.write(code);
+                }
 
-                // 2. Compile — capture javac stderr
                 ProcessBuilder compilePb = new ProcessBuilder("javac", "Main.java");
-                compilePb.redirectErrorStream(true);          // merge stderr → stdout
+                compilePb.redirectErrorStream(true);
                 Process compile = compilePb.start();
 
                 String compileOut = drain(compile.getInputStream());
                 compile.waitFor();
 
                 if (compile.exitValue() != 0) {
-                    // Syntax / compile error — return immediately
                     response.setStdout("");
                     response.setStderr(compileOut);
                     response.setExitCode(1);
@@ -61,31 +59,36 @@ public class CodeController {
                     return response;
                 }
 
-                // 3. Run — merge stdout + stderr so exceptions appear inline
                 ProcessBuilder runPb = new ProcessBuilder("java", "Main");
-                runPb.redirectErrorStream(true);              // ✅ KEY FIX
+                runPb.redirectErrorStream(true);
                 Process run = runPb.start();
 
-                String output = drain(run.getInputStream());  // contains BOTH stdout & stderr
+                // ✅ SEND INPUT
+                writeInput(run, input);
+
+                String output = drain(run.getInputStream());
                 run.waitFor();
 
                 response.setStdout(output);
-                response.setStderr("");                       // already merged into stdout
+                response.setStderr("");
                 response.setExitCode(run.exitValue());
                 saveExecution(token, code, language, output);
                 return response;
+            }
 
-                // ─────────────────────────────────────────
-                //  PYTHON
-                // ─────────────────────────────────────────
-            } else if ("python".equalsIgnoreCase(language)) {
+            // ===================== PYTHON =====================
+            else if ("python".equalsIgnoreCase(language)) {
 
-                try (FileWriter w = new FileWriter("script.py")) { w.write(code); }
+                try (FileWriter w = new FileWriter("script.py")) {
+                    w.write(code);
+                }
 
                 ProcessBuilder pb = new ProcessBuilder("python", "script.py");
                 pb.redirectErrorStream(true);
                 Process run = pb.start();
 
+                writeInput(run, input);
+
                 String output = drain(run.getInputStream());
                 run.waitFor();
 
@@ -94,18 +97,21 @@ public class CodeController {
                 response.setExitCode(run.exitValue());
                 saveExecution(token, code, language, output);
                 return response;
+            }
 
-                // ─────────────────────────────────────────
-                //  JAVASCRIPT
-                // ─────────────────────────────────────────
-            } else if ("javascript".equalsIgnoreCase(language)) {
+            // ===================== JAVASCRIPT =====================
+            else if ("javascript".equalsIgnoreCase(language)) {
 
-                try (FileWriter w = new FileWriter("script.js")) { w.write(code); }
+                try (FileWriter w = new FileWriter("script.js")) {
+                    w.write(code);
+                }
 
                 ProcessBuilder pb = new ProcessBuilder("node", "script.js");
                 pb.redirectErrorStream(true);
                 Process run = pb.start();
 
+                writeInput(run, input);
+
                 String output = drain(run.getInputStream());
                 run.waitFor();
 
@@ -114,8 +120,9 @@ public class CodeController {
                 response.setExitCode(run.exitValue());
                 saveExecution(token, code, language, output);
                 return response;
+            }
 
-            } else {
+            else {
                 response.setStdout("");
                 response.setStderr("Language not supported");
                 response.setExitCode(1);
@@ -130,27 +137,35 @@ public class CodeController {
         }
     }
 
-    // ─────────────────────────────────────────
-    //  HELPER: drain an InputStream to String
-    // ─────────────────────────────────────────
+    // ===================== WRITE INPUT =====================
+    private void writeInput(Process process, String input) throws IOException {
+        if (input != null && !input.isEmpty()) {
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(process.getOutputStream())
+            );
+            writer.write(input);
+            writer.newLine();
+            writer.flush();
+            writer.close();
+        }
+    }
+
+    // ===================== READ OUTPUT =====================
     private String drain(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line).append("\n");
         }
         return sb.toString();
     }
 
-    // ─────────────────────────────────────────
-    //  HELPER: save execution to DB
-    // ─────────────────────────────────────────
+    // ===================== SAVE =====================
     private void saveExecution(String token, String code, String language, String output) {
         try {
             Long userId = JwtUtil.extractUserId(token.replace("Bearer ", ""));
-            User user   = userRepository.findById(userId).orElse(null);
+            User user = userRepository.findById(userId).orElse(null);
 
             CodeExecution execution = new CodeExecution();
             execution.setCode(code);
@@ -158,13 +173,12 @@ public class CodeController {
             execution.setOutput(output);
             execution.setExecutedAt(LocalDateTime.now());
             execution.setUser(user);
+
             repository.save(execution);
         } catch (Exception ignored) {}
     }
 
-    // ─────────────────────────────────────────
-    //  HISTORY
-    // ─────────────────────────────────────────
+    // ===================== HISTORY =====================
     @GetMapping("/history")
     public List<CodeExecution> getHistory(@RequestHeader("Authorization") String token) {
         Long userId = JwtUtil.extractUserId(token.replace("Bearer ", ""));
@@ -177,5 +191,3 @@ public class CodeController {
         return "Deleted successfully";
     }
 }
-
-

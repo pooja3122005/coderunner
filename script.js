@@ -1,4 +1,4 @@
+console.log("Hello, CodeRunner!");
 
-
-const x = 78;
+const x = 42;
 console.log(`The answer is ${x}`);
